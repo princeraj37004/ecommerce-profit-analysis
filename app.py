@@ -152,8 +152,6 @@ st.write(
 # Create input form using an existing row
 # ------------------------------------------
 
-with st.form("profit_prediction_form"):
-
     st.subheader("📝 Order Details")
 
     col1, col2, col3 = st.columns(3)
