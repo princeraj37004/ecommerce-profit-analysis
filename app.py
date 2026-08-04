@@ -227,8 +227,6 @@ st.bar_chart(r2_chart)
         st.error(
             f"Prediction Error: {e}"
         )
-
-
 # ==========================================
 # PROFIT PREDICTION FORM
 # ==========================================
