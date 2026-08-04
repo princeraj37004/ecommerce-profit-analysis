@@ -550,6 +550,71 @@ if predict_button:
 
 
     except Exception as e:
+        # ==========================================
+# MODEL PERFORMANCE
+# ==========================================
+
+st.divider()
+
+st.header("📊 Model Performance Comparison")
+
+model_results = pd.DataFrame({
+    "Model": [
+        "Clean Decision Tree",
+        "Random Forest",
+        "Tuned Random Forest"
+    ],
+    "MAE": [
+        28.368530,
+        25.456367,
+        26.037192
+    ],
+    "MSE": [
+        4487.709443,
+        3560.009619,
+        3437.715239
+    ],
+    "RMSE": [
+        66.990368,
+        59.665816,
+        58.632033
+    ],
+    "R² Score": [
+        0.600543,
+        0.683118,
+        0.694004
+    ]
+})
+
+# Display comparison table
+st.dataframe(
+    model_results,
+    use_container_width=True,
+    hide_index=True
+)
+
+
+# ==========================================
+# BEST MODEL
+# ==========================================
+
+st.subheader("🏆 Best Model")
+
+st.success(
+    "Tuned Random Forest is the best performing model "
+    "with an R² Score of 69.40% and RMSE of 58.63."
+)
+
+
+# ==========================================
+# R² SCORE CHART
+# ==========================================
+
+st.subheader("📈 R² Score Comparison")
+
+r2_chart = model_results.set_index("Model")["R² Score"]
+
+st.bar_chart(r2_chart)
 
         st.error(
             f"Prediction Error: {e}"
