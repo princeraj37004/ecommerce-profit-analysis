@@ -369,6 +369,11 @@ if predict_button:
         st.success(
             f"💰 Predicted Profit: ₹{prediction[0]:,.2f}"
         )
+    except Exception as e:
+
+        st.error(
+            f"Prediction Error: {e}"
+        )
         # ==========================================
 # ML PROFIT PREDICTION
 # ==========================================
