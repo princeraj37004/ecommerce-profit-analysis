@@ -41,6 +41,54 @@ def load_model():
 dataset = load_data()
 model, preprocessor = load_model()
 
+# ==========================================
+# SIDEBAR FILTERS
+# ==========================================
+
+st.sidebar.header("🔍 Dashboard Filters")
+
+country = st.sidebar.selectbox(
+    "Country",
+    ["All"] + sorted(dataset["Country"].dropna().unique().tolist())
+)
+
+segment = st.sidebar.selectbox(
+    "Customer Segment",
+    ["All"] + sorted(dataset["Customer_Segment"].dropna().unique().tolist())
+)
+
+category = st.sidebar.selectbox(
+    "Product Category",
+    ["All"] + sorted(dataset["Product_Category"].dropna().unique().tolist())
+)
+
+month = st.sidebar.selectbox(
+    "Month",
+    ["All"] + sorted(dataset["Month"].unique().tolist())
+)
+
+filtered_data = dataset.copy()
+
+if country != "All":
+    filtered_data = filtered_data[
+        filtered_data["Country"] == country
+    ]
+
+if segment != "All":
+    filtered_data = filtered_data[
+        filtered_data["Customer_Segment"] == segment
+    ]
+
+if category != "All":
+    filtered_data = filtered_data[
+        filtered_data["Product_Category"] == category
+    ]
+
+if month != "All":
+    filtered_data = filtered_data[
+        filtered_data["Month"] == month
+    ]
+
 
 # ==========================================
 # TITLE
