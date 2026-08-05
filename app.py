@@ -232,11 +232,11 @@ pie_data = (
     .value_counts()
 )
 
-st.pyplot
+st.pyplot(
     pie_data.plot.pie(
         autopct="%1.1f%%",
         figsize=(5,5)
-    .figure
+    ).figure
 )
 # ==========================================
 # DOWNLOAD FILTERED DATA
