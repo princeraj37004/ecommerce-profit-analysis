@@ -111,24 +111,24 @@ col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.metric(
         "📦 Total Orders",
-        f"{len(dataset):,}"
+       f"{len(filtered_data):,}"
     )
 
 with col2:
     st.metric(
         "💰 Total Profit",
-        f"{dataset['Profit_Amount'].sum():,.2f}"
+        filtered_data["Profit_Amount"].sum()
     )
 
 with col3:
     st.metric(
         "📈 Average Profit",
-        f"{dataset['Profit_Amount'].mean():,.2f}"
+        filtered_data["Profit_Amount"].mean():,.2f}"
     )
 
 with col4:
     return_rate = (
-        dataset["Returned"].eq("Yes").mean() * 100
+        filtered_data["Returned"].eq("Yes").mean() * 100
     )
 
     st.metric(
@@ -147,7 +147,7 @@ st.divider()
 st.subheader("📦 Profit by Product Category")
 
 category_profit = (
-    dataset
+    filtered_data
     .groupby("Product_Category")["Profit_Amount"]
     .sum()
     .sort_values(ascending=False)
@@ -163,7 +163,7 @@ st.bar_chart(category_profit)
 st.subheader("👥 Profit by Customer Segment")
 
 segment_profit = (
-    dataset
+    filtered_data
     .groupby("Customer_Segment")["Profit_Amount"]
     .sum()
     .sort_values(ascending=False)
@@ -179,7 +179,7 @@ st.bar_chart(segment_profit)
 st.subheader("📅 Monthly Profit Trend")
 
 monthly_profit = (
-    dataset
+    filtered_data
     .groupby("Month")["Profit_Amount"]
     .sum()
 )
