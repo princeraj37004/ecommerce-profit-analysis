@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import plotly.express as px
 import streamlit as st
 import pandas as pd
 import joblib
@@ -170,7 +171,15 @@ segment_profit = (
     .sort_values(ascending=False)
 )
 
-st.bar_chart(segment_profit)
+fig = px.bar(
+    category_profit.reset_index(),
+    x="Product_Category",
+    y="Profit_Amount",
+    color="Profit_Amount",
+    title="Profit by Product Category"
+)
+
+st.plotly_chart(fig, use_container_width=True)
 
 
 # ==========================================
@@ -185,7 +194,15 @@ monthly_profit = (
     .sum()
 )
 
-st.line_chart(monthly_profit)
+fig = px.line(
+    monthly_profit.reset_index(),
+    x="Month",
+    y="Profit_Amount",
+    markers=True,
+    title="Monthly Profit Trend"
+)
+
+st.plotly_chart(fig, use_container_width=True)
 
 # ==========================================
 # DATASET PREVIEW
