@@ -123,7 +123,7 @@ with col2:
 with col3:
     st.metric(
         "📈 Average Profit",
-        filtered_data["Profit_Amount"].mean():
+        filtered_data["Profit_Amount"].mean()
     )
 
 with col4:
