@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import plotly.express as px
 import streamlit as st
 import pandas as pd
@@ -155,7 +154,6 @@ category_profit = (
     .sort_values(ascending=False)
 )
 
-st.bar_chart(category_profit)
 
 
 # ==========================================
@@ -250,12 +248,16 @@ pie_data = (
     .value_counts()
 )
 
-st.pyplot(
-    pie_data.plot.pie(
-        autopct="%1.1f%%",
-        figsize=(5,5)
-    ).figure
+pie_df = pie_data.reset_index()
+pie_df.columns=["Customer_Segment","Count"]
+fig = px.pie(
+    pie_df,
+    names="Customer_Segment",
+    values="Count",
+    hole=0.4,
+    title="Customer Segment Distribution"
 )
+st.plotly_chart(fig, use_container_width=True)
 # ==========================================
 # DOWNLOAD FILTERED DATA
 # ==========================================
