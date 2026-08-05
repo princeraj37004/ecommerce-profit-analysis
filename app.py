@@ -186,6 +186,73 @@ monthly_profit = (
 
 st.line_chart(monthly_profit)
 
+# ==========================================
+# DATASET PREVIEW
+# ==========================================
+
+st.divider()
+
+st.header("📋 Filtered Dataset Preview")
+
+st.write(f"Showing **{len(filtered_data)}** records")
+
+st.dataframe(
+    filtered_data,
+    use_container_width=True
+)
+
+# ==========================================
+# TOP 10 PRODUCT CATEGORIES
+# ==========================================
+
+st.divider()
+
+st.subheader("🔥 Top Product Categories")
+
+top_products = (
+    filtered_data
+    .groupby("Product_Category")["Profit_Amount"]
+    .sum()
+    .sort_values(ascending=False)
+    .head(10)
+)
+
+st.bar_chart(top_products)
+
+# ==========================================
+# CUSTOMER SEGMENT PIE CHART
+# ==========================================
+
+st.divider()
+
+st.subheader("🥧 Customer Segment Distribution")
+
+pie_data = (
+    filtered_data["Customer_Segment"]
+    .value_counts()
+)
+
+st.pyplot(
+    pie_data.plot.pie(
+        autopct="%1.1f%%",
+        figsize=(5,5)
+    ).figure
+)
+
+# ==========================================
+# DOWNLOAD FILTERED DATA
+# ==========================================
+
+st.divider()
+
+csv = filtered_data.to_csv(index=False)
+
+st.download_button(
+    label="📥 Download Filtered Dataset",
+    data=csv,
+    file_name="filtered_data.csv",
+    mime="text/csv"
+)
 
 # ==========================================
 # ML PROFIT PREDICTION
@@ -568,3 +635,20 @@ r2_chart = (
 )
 
 st.bar_chart(r2_chart)
+
+st.divider()
+
+st.markdown(
+    """
+    ### 👨‍💻 Developed by Prince Kumar
+
+    🚀 Project: E-Commerce Sales & Profit Analysis
+
+    Built using:
+    - Python
+    - Streamlit
+    - Machine Learning
+    - Scikit-learn
+    - Pandas
+    """
+)
