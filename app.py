@@ -58,15 +58,17 @@ st.markdown("""
 <style>
 
 div[data-testid="metric-container"]{
-    background-color:#F8F9FA;
-    border:2px solid #E6E6E6;
+    background: linear-gradient(135deg,#ffffff,#f7f9fc);
+    border:1px solid #E5E7EB;
     padding:18px;
-    border-radius:12px;
-    box-shadow:0px 3px 8px rgba(0,0,0,0.1);
+    border-radius:18px;
+    box-shadow:0px 5px 18px rgba(0,0,0,0.10);
+    transition:0.3s;
 }
 
-h1{
-    color:#1E3A8A;
+div[data-testid="metric-container"]:hover{
+    transform:translateY(-4px);
+    box-shadow:0px 8px 24px rgba(0,0,0,0.15);
 }
 
 </style>
@@ -225,68 +227,65 @@ st.divider()
 # PROFIT BY PRODUCT CATEGORY
 # ==========================================
 
-st.subheader("📦 Profit by Product Category")
-
-category_profit = (
-    filtered_data
-    .groupby("Product_Category")["Profit_Amount"]
-    .sum()
-    .sort_values(ascending=False)
+fig = px.bar(
+    category_profit.reset_index(),
+    x="Product_Category",
+    y="Profit_Amount",
+    color="Profit_Amount",
+    text_auto=".2s",
+    title="💰 Profit by Product Category",
+    color_continuous_scale="Blues"
 )
 
+fig.update_layout(
+    template="plotly_white",
+    title_x=0.5
+)
+
+st.plotly_chart(fig, use_container_width=True)
 
 
 # ==========================================
 # CUSTOMER SEGMENT PROFIT
 # ==========================================
 
-st.subheader("👥 Profit by Customer Segment")
-
-segment_profit = (
-    filtered_data
-    .groupby("Customer_Segment")["Profit_Amount"]
-    .sum()
-    .sort_values(ascending=False)
-)
-
 fig = px.bar(
-    category_profit.reset_index(),
-    x="Product_Category",
+    segment_profit.reset_index(),
+    x="Customer_Segment",
     y="Profit_Amount",
-    color="Profit_Amount"
+    color="Profit_Amount",
+    text_auto=".2s",
+    title="👥 Customer Segment Profit",
+    color_continuous_scale="Greens"
 )
 
 fig.update_layout(
-    title="",
-    xaxis_title="Product Category",
-    yaxis_title="Profit"
+    template="plotly_white",
+    title_x=0.5
 )
 
 st.plotly_chart(fig, use_container_width=True)
 
-
 # ==========================================
 # MONTHLY PROFIT
 # ==========================================
-
-st.subheader("📅 Monthly Profit Trend")
-
-monthly_profit = (
-    filtered_data
-    .groupby("Month")["Profit_Amount"]
-    .sum()
-)
 
 fig = px.line(
     monthly_profit.reset_index(),
     x="Month",
     y="Profit_Amount",
     markers=True,
-    title="Monthly Profit Trend"
+    title="📈 Monthly Profit Trend"
+)
+
+fig.update_traces(line_width=4)
+
+fig.update_layout(
+    template="plotly_white",
+    title_x=0.5
 )
 
 st.plotly_chart(fig, use_container_width=True)
-
 # ==========================================
 # AI BUSINESS INSIGHTS
 # ==========================================
