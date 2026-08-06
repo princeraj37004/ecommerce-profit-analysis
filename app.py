@@ -122,10 +122,10 @@ with col2:
     )
 
 with col3:
-    st.metric(
-        "📈 Average Profit",
-        filtered_data["Profit_Amount"].mean()
-    )
+   st.metric(
+    "📈 Average Profit",
+    f"₹{filtered_data['Profit_Amount'].mean():,.2f}"
+)
 
 with col4:
     return_rate = (
@@ -173,8 +173,13 @@ fig = px.bar(
     category_profit.reset_index(),
     x="Product_Category",
     y="Profit_Amount",
-    color="Profit_Amount",
-    title="Profit by Product Category"
+    color="Profit_Amount"
+)
+
+fig.update_layout(
+    title="",
+    xaxis_title="Product Category",
+    yaxis_title="Profit"
 )
 
 st.plotly_chart(fig, use_container_width=True)
