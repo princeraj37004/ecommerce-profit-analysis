@@ -14,6 +14,45 @@ st.set_page_config(
     layout="wide"
 )
 
+# 👇 YAHAN SE CSS PASTE KARO
+st.markdown("""
+<style>
+
+/* Sidebar */
+section[data-testid="stSidebar"]{
+    background: linear-gradient(180deg,#F5F7FF,#EEF2FF);
+}
+
+/* Sidebar Title */
+section[data-testid="stSidebar"] h2{
+    color:#1E3A8A;
+    font-weight:700;
+}
+
+/* Selectbox */
+div[data-baseweb="select"]{
+    border-radius:12px;
+}
+
+/* Metric Cards */
+div[data-testid="metric-container"]{
+    background:white;
+    border-radius:15px;
+    padding:15px;
+    border:1px solid #E5E7EB;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# ==========================================
+# LOAD DATA
+# ==========================================
+
+@st.cache_data
+def load_data():
+    return pd.read_csv("e-commerce.csv")
 # 👇 YAHAN PASTE KARO
 st.markdown("""
 <style>
@@ -72,7 +111,22 @@ model, preprocessor = load_model()
 # SIDEBAR FILTERS
 # ==========================================
 
-st.sidebar.header("🔍 Dashboard Filters")
+st.sidebar.markdown("""
+# 🔎 Dashboard Filters
+
+Filter data and explore insights.
+""")
+st.sidebar.markdown("---")
+
+st.sidebar.info(
+"""
+💡 **Tip**
+
+Use filters to analyze different
+countries, categories and
+customer segments.
+"""
+)
 
 country = st.sidebar.selectbox(
     "Country",
