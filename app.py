@@ -37,11 +37,28 @@ h1{
 # LOAD DATA
 # ==========================================
 
+@st.cache_data
+def load_data():
+    return pd.read_csv("e-commerce.csv")
+
+
+# ==========================================
+# LOAD ML MODEL
+# ==========================================
+
 @st.cache_resource
 def load_model():
     model = joblib.load("tuned_random_forest.pkl")
     preprocessor = joblib.load("preprocessor.pkl")
     return model, preprocessor
+
+
+# ==========================================
+# LOAD DATA AND MODEL
+# ==========================================
+
+dataset = load_data()
+model, preprocessor = load_model()
 
 
 # ==========================================
