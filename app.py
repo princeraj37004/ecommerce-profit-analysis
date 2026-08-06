@@ -234,6 +234,40 @@ fig = px.line(
 st.plotly_chart(fig, use_container_width=True)
 
 # ==========================================
+# AI BUSINESS INSIGHTS
+# ==========================================
+
+st.divider()
+
+st.header("🤖 AI Business Insights")
+
+top_category = (
+    filtered_data.groupby("Product_Category")["Profit_Amount"]
+    .sum()
+    .idxmax()
+)
+
+top_segment = (
+    filtered_data.groupby("Customer_Segment")["Profit_Amount"]
+    .sum()
+    .idxmax()
+)
+
+return_rate = (
+    filtered_data["Returned"].eq("Yes").mean() * 100
+)
+
+avg_profit = filtered_data["Profit_Amount"].mean()
+
+st.success(f"🏆 Highest Profit Category : {top_category}")
+
+st.info(f"👥 Best Customer Segment : {top_segment}")
+
+st.warning(f"📦 Return Rate : {return_rate:.2f}%")
+
+st.success(f"💰 Average Profit per Order : ₹{avg_profit:,.2f}")
+
+# ==========================================
 # DATASET PREVIEW
 # ==========================================
 
