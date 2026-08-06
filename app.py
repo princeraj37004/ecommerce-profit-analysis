@@ -1,31 +1,40 @@
+import matplotlib.pyplot as plt
 import plotly.express as px
 import streamlit as st
 import pandas as pd
 import joblib
-
 
 # ==========================================
 # PAGE CONFIGURATION
 # ==========================================
 
 st.set_page_config(
-    page_title="E-Commerce Profit Analysis",
+    page_title="E-Commerce Sales & Profit Analysis",
     page_icon="🛒",
     layout="wide"
 )
 
+# 👇 YAHAN PASTE KARO
+st.markdown("""
+<style>
+
+div[data-testid="metric-container"]{
+    background-color:#F8F9FA;
+    border:2px solid #E6E6E6;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0px 3px 8px rgba(0,0,0,0.1);
+}
+
+h1{
+    color:#1E3A8A;
+}
+
+</style>
+""", unsafe_allow_html=True)
 
 # ==========================================
 # LOAD DATA
-# ==========================================
-
-@st.cache_data
-def load_data():
-    return pd.read_csv("e-commerce.csv")
-
-
-# ==========================================
-# LOAD ML MODEL
 # ==========================================
 
 @st.cache_resource
@@ -118,14 +127,14 @@ with col1:
 with col2:
     st.metric(
         "💰 Total Profit",
-        filtered_data["Profit_Amount"].sum()
+        f"₹ {filtered_data['Profit_Amount'].sum():,.2f}"
     )
 
 with col3:
-   st.metric(
-    "📈 Average Profit",
-    f"₹{filtered_data['Profit_Amount'].mean():,.2f}"
-)
+    st.metric(
+        "📈 Average Profit",
+        f"₹ {filtered_data['Profit_Amount'].mean():,.2f}"
+    )
 
 with col4:
     return_rate = (
