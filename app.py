@@ -914,7 +914,7 @@ st.markdown("---")
 st.header("🔍 Feature Importance")
 
 feature_importance = pd.DataFrame({
-    "Feature": X.columns,
+    "Feature": X_train.columns,
     "Importance": tuned_rf.feature_importances_
 })
 
