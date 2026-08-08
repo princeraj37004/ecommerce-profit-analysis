@@ -913,32 +913,54 @@ model_results = pd.DataFrame({
 st.markdown("---")
 st.header("🔍 Feature Importance")
 
-feature_importance = pd.DataFrame({
-    "Feature": X_train.columns,
-    "Importance": tuned_rf.feature_importances_
-})
+try:
 
-feature_importance = feature_importance.sort_values(
-    by="Importance",
-    ascending=False
-).head(15)
+    # Get feature names after preprocessing
+    feature_names = preprocessor.get_feature_names_out()
 
-fig = px.bar(
-    feature_importance.sort_values("Importance"),
-    x="Importance",
-    y="Feature",
-    orientation="h",
-    title="Top 15 Features Influencing Profit"
-)
+    # Get importance from loaded Tuned Random Forest model
+    importances = model.feature_importances_
 
-fig.update_layout(
-    height=600,
-    xaxis_title="Importance",
-    yaxis_title="Feature"
-)
+    feature_importance = pd.DataFrame({
+        "Feature": feature_names,
+        "Importance": importances
+    })
 
-st.plotly_chart(fig, use_container_width=True)
+    # Sort by importance
+    feature_importance = (
+        feature_importance
+        .sort_values(by="Importance", ascending=False)
+        .head(15)
+    )
 
+    # Chart
+    fig = px.bar(
+        feature_importance.sort_values("Importance"),
+        x="Importance",
+        y="Feature",
+        orientation="h",
+        title="🔍 Top 15 Features Influencing Profit",
+        text_auto=".3f"
+    )
+
+    fig.update_layout(
+        height=600,
+        template="plotly_white",
+        title_x=0.5,
+        xaxis_title="Importance",
+        yaxis_title="Feature"
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True
+    )
+
+except Exception as e:
+
+    st.warning(
+        f"Feature importance could not be displayed: {e}"
+    )
 # ==========================================
 # DISPLAY MODEL TABLE
 # ==========================================
