@@ -227,6 +227,17 @@ st.divider()
 # PROFIT BY PRODUCT CATEGORY
 # ==========================================
 
+st.divider()
+
+st.subheader("📦 Profit by Product Category")
+
+category_profit = (
+    filtered_data
+    .groupby("Product_Category")["Profit_Amount"]
+    .sum()
+    .sort_values(ascending=False)
+)
+
 fig = px.bar(
     category_profit.reset_index(),
     x="Product_Category",
@@ -242,12 +253,22 @@ fig.update_layout(
     title_x=0.5
 )
 
-st.plotly_chart(fig, use_container_width=True)
-
-
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
 # ==========================================
 # CUSTOMER SEGMENT PROFIT
 # ==========================================
+
+st.subheader("👥 Profit by Customer Segment")
+
+segment_profit = (
+    filtered_data
+    .groupby("Customer_Segment")["Profit_Amount"]
+    .sum()
+    .sort_values(ascending=False)
+)
 
 fig = px.bar(
     segment_profit.reset_index(),
@@ -264,7 +285,10 @@ fig.update_layout(
     title_x=0.5
 )
 
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
 
 # ==========================================
 # MONTHLY PROFIT
