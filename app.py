@@ -328,6 +328,135 @@ st.plotly_chart(
     fig,
     use_container_width=True
 )
+
+# ==========================================
+# 🤖 AI BUSINESS INSIGHTS
+# ==========================================
+
+st.divider()
+
+st.subheader("🤖 AI Business Insights")
+
+# Best Product Category
+best_category = (
+    filtered_data
+    .groupby("Product_Category")["Profit_Amount"]
+    .sum()
+    .idxmax()
+)
+
+best_category_profit = (
+    filtered_data
+    .groupby("Product_Category")["Profit_Amount"]
+    .sum()
+    .max()
+)
+
+# Best Customer Segment
+best_segment = (
+    filtered_data
+    .groupby("Customer_Segment")["Profit_Amount"]
+    .sum()
+    .idxmax()
+)
+
+best_segment_profit = (
+    filtered_data
+    .groupby("Customer_Segment")["Profit_Amount"]
+    .sum()
+    .max()
+)
+
+# Best Country
+best_country = (
+    filtered_data
+    .groupby("Country")["Profit_Amount"]
+    .sum()
+    .idxmax()
+)
+
+best_country_profit = (
+    filtered_data
+    .groupby("Country")["Profit_Amount"]
+    .sum()
+    .max()
+)
+
+# Return Rate
+current_return_rate = (
+    filtered_data["Returned"].eq("Yes").mean() * 100
+)
+
+# ==========================================
+# INSIGHT CARDS
+# ==========================================
+
+insight1, insight2 = st.columns(2)
+
+with insight1:
+
+    st.info(
+        f"""
+        🏆 **Best Product Category**
+
+        **{best_category}** is currently the most profitable
+        product category with total profit of
+
+        **₹{best_category_profit:,.2f}**
+        """
+    )
+
+with insight2:
+
+    st.success(
+        f"""
+        👥 **Best Customer Segment**
+
+        **{best_segment}** generates the highest profit with
+
+        **₹{best_segment_profit:,.2f}**
+        """
+    )
+
+
+insight3, insight4 = st.columns(2)
+
+with insight3:
+
+    st.warning(
+        f"""
+        🌍 **Top Performing Country**
+
+        **{best_country}** has the highest total profit:
+
+        **₹{best_country_profit:,.2f}**
+        """
+    )
+
+with insight4:
+
+    if current_return_rate > 10:
+
+        st.error(
+            f"""
+            ⚠️ **Return Rate Alert**
+
+            Current return rate is **{current_return_rate:.2f}%**.
+
+            Consider investigating returned products,
+            delivery issues and customer feedback.
+            """
+        )
+
+    else:
+
+        st.success(
+            f"""
+            ✅ **Healthy Return Rate**
+
+            Current return rate is **{current_return_rate:.2f}%**.
+            """
+        )
 # ==========================================
 # AI BUSINESS INSIGHTS
 # ==========================================
