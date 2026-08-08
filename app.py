@@ -906,7 +906,38 @@ model_results = pd.DataFrame({
         0.694004
     ]
 })
+# =========================
+# FEATURE IMPORTANCE
+# =========================
 
+st.markdown("---")
+st.header("🔍 Feature Importance")
+
+feature_importance = pd.DataFrame({
+    "Feature": X.columns,
+    "Importance": tuned_rf.feature_importances_
+})
+
+feature_importance = feature_importance.sort_values(
+    by="Importance",
+    ascending=False
+).head(15)
+
+fig = px.bar(
+    feature_importance.sort_values("Importance"),
+    x="Importance",
+    y="Feature",
+    orientation="h",
+    title="Top 15 Features Influencing Profit"
+)
+
+fig.update_layout(
+    height=600,
+    xaxis_title="Importance",
+    yaxis_title="Feature"
+)
+
+st.plotly_chart(fig, use_container_width=True)
 
 # ==========================================
 # DISPLAY MODEL TABLE
