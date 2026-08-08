@@ -291,8 +291,19 @@ st.plotly_chart(
 )
 
 # ==========================================
-# MONTHLY PROFIT
+# MONTHLY PROFIT TREND
 # ==========================================
+
+st.divider()
+
+st.subheader("📅 Monthly Profit Trend")
+
+monthly_profit = (
+    filtered_data
+    .groupby("Month")["Profit_Amount"]
+    .sum()
+    .sort_index()
+)
 
 fig = px.line(
     monthly_profit.reset_index(),
@@ -302,14 +313,21 @@ fig = px.line(
     title="📈 Monthly Profit Trend"
 )
 
-fig.update_traces(line_width=4)
+fig.update_traces(
+    line_width=4
+)
 
 fig.update_layout(
     template="plotly_white",
-    title_x=0.5
+    title_x=0.5,
+    xaxis_title="Month",
+    yaxis_title="Profit Amount"
 )
 
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(
+    fig,
+    use_container_width=True
+)
 # ==========================================
 # AI BUSINESS INSIGHTS
 # ==========================================
