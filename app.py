@@ -86,20 +86,18 @@ def load_data():
 # ==========================================
 # LOAD ML MODEL
 # ==========================================
-
 @st.cache_resource
 def load_model():
-    model = joblib.load("tuned_random_forest.pkl")
-    preprocessor = joblib.load("preprocessor.pkl")
-    return model, preprocessor
+    try:
+        pipeline = joblib.load("profit_prediction_pipeline.pkl")
+        return pipeline
+    except Exception as e:
+        st.error(f"Model loading error: {e}")
+        return None
 
-
-# ==========================================
-# LOAD DATA AND MODEL
-# ==========================================
 
 dataset = load_data()
-model, preprocessor = load_model()
+pipeline = load_model()
 
 
 # ==========================================
@@ -799,10 +797,6 @@ with st.form("profit_prediction_form"):
 
 if predict_button:
 
-    # ======================================
-    # CREATE INPUT DATA
-    # ======================================
-
     input_data = pd.DataFrame({
 
         "Year": [year],
@@ -840,20 +834,9 @@ if predict_button:
 
     })
 
-
-    # ======================================
-    # PREDICTION
-    # ======================================
-
     try:
 
-        transformed_data = preprocessor.transform(
-            input_data
-        )
-
-        prediction = model.predict(
-            transformed_data
-        )
+        prediction = pipeline.predict(input_data)
 
         st.success(
             f"💰 Predicted Profit: ₹{prediction[0]:,.2f}"
@@ -864,7 +847,6 @@ if predict_button:
         st.error(
             f"Prediction Error: {e}"
         )
-
 
 # ==========================================
 # MODEL PERFORMANCE
